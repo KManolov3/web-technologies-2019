@@ -1,0 +1,41 @@
+.container {
+    width: 512px;
+    margin: auto;  
+    background: rgb(240,240,240);
+    border: 1px solid rgb(114,113,114);
+    text-align: center;
+}
+
+.heading {
+    margin: -1px;
+    padding: 16px;
+    color: rgb(255,255,255);
+    background-color: rgb(151, 191, 13);
+    font-size: 20px;
+    font-family: Sans-Serif;   
+}
+
+input[type=text], input[type=password] {
+    display: inline-block;  
+    width: 90%;
+    margin: 5px 0px 15px 0px;
+    padding: 11px;
+    font-size: 17px;
+}
+
+hr {
+    padding-bottom: 9px;
+    border: none;
+}
+
+.register-button {
+    width: 90%;
+    margin: 8px 0px 28px 0px;
+    padding: 10px;
+    color: white;
+    background-color: rgb(151, 191, 13);
+    border: none;
+    font-size: 20px;
+    font-family: Calibri;
+    cursor: pointer;
+}
