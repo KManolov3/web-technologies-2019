@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Student Grading Form</title>
+</head>
+<body>
+	<form id="student_form" method="post">
+		<label> Student Name: <input id="name" name="name"> <span id="name_error"></span> </label><br>
+		<label> Faculty Number: <input id="fn" name="fn"> <span id="fn_error"></span> </label><br>
+		<label> Mark: <input id="mark" name="mark"> <span id="mark_error"></span> </label><br>
+		<button id="submit"> Submit </button>
+	</form>
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script>
+        function isArray(what) {
+            return Object.prototype.toString.call(what) === '[object Array]';
+        }
+
+        function cleanElemInElem(what, inWhat){
+            $(inWhat).find(what).html("");
+        }
+
+        function buildHtmlTable(data, id) {
+            if($("#"+id).length == 0){
+                var table = document.createElement('table'); 
+                $(table).attr("id", id);
+            } else {
+                var table = $("#"+id);
+                $(table).html("");
+            }
+            var columns = addAllColumnHeaders(data, table);
+
+            for (var i = 0; i < data.length; i++) {
+                var row$ = $('<tr/>');
+                for (var colIndex = 0; colIndex < columns.length; colIndex++) {
+                  var cellValue = data[i][columns[colIndex]];
+                  if (cellValue == null) cellValue = "";
+                  row$.append($('<td/>').html(cellValue));
+                }
+            $(table).append(row$);
+            }
+            return table;
+        }
+
+        function addAllColumnHeaders(data, table) {
+            var columnSet = [];
+            var headerTr$ = $('<tr/>');
+
+            for (var i = 0; i < data.length; i++) {
+                var rowHash = data[i];
+                for (var key in rowHash) {
+                  if ($.inArray(key, columnSet) == -1) {
+                    columnSet.push(key);
+                    headerTr$.append($('<th/>').html(key));
+                  }
+                }
+            }
+            $(table).append(headerTr$);
+        return columnSet;
+        }
+
+        function showErrors(errors){
+            for(error in errors){
+                $("#"+error).html(errors[error]);
+            }
+        }
+
+	    $(document).ready(function(){
+            $("#submit").click(function(){
+                $.ajax({
+                    url: "student-grading-server.php", 
+                    type : "POST",
+                    dataType : 'json',
+                    data : $("#student_form").serialize(), 
+                    success : function(result) {
+                        cleanElemInElem("span", "#student_form");
+
+                        if(isArray(result)){
+                            $("body").append((buildHtmlTable(result, "student_data")));
+                        } else {
+                            showErrors(result);
+                        }   
+                    },
+                    error: function(xhr, resp, text) {
+                        console.log(xhr, resp, text);
+                    }	
+                })
+                return false;
+            });
+        });
+
+
+	</script>
+</body>
+</html>
