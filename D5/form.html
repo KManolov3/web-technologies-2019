@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <title>JS form validation</title>
+  <meta charset="utf-8">
+  <script src="./js/formHandling.js" defer></script>
+</head>
+<body>
+	<form name="registerForm" id="registerForm" onsubmit="return validate(this)" method="post">
+		<p>
+			<label>Userame: 
+				<input type="text" autocomplete="on" name="uname"> 
+			</label>
+			<span id="error-uname">
+		</p>
+		<p>
+			<label>Password: 
+				<input type="password" autocomplete="new-password" name="password"> 
+			</label>
+			<span id="error-password">
+		</p>
+		<p>
+			<label>Repeat password: 
+				<input type="password" autocomplete="new-password" name="repeatPassword"> 
+			</label>
+			<span id="error-repeatPassword">
+		</p>
+		<input type="submit" value="Send">
+	</form>
+</body>
